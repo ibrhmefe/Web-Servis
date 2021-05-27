@@ -228,6 +228,10 @@ mysqli_close($baglanti);
 ```
 
 Web servisle işimiz bu kadar şimdi baglan.html dosyamızda gerekli birkaç değişikliği yapalım. Data içerisinde 2 adet veri, birisi işlem tipi diğeri ise veri tabanımıza işleyecek olduğumuz verimiz. Eğer ki araba modellerini almak istiyorsak islem değerini araba_modelleri_getir olarak ayarlamamız ve diğer verileri silmemiz yeterli olacaktır.
+
+
+ ## Baglan.html Tüm Kodlar
+
 ```
 <!DOCTYPE html>
 <html lang="tr">
@@ -242,7 +246,7 @@ Web servisle işimiz bu kadar şimdi baglan.html dosyamızda gerekli birkaç de�
             type: "post",
             url: "http://192.168.1.6/baglan.php",
             dataType: "json",
-            data: {"islem": "araba_modeli_ekle",								"model": "Mazda"},
+            data: {"islem": "araba_modeli_ekle","model": "Mazda"},
             success: function (cevap) {
                 if(cevap[0].sonuc == "1"){
                     // İşlem başarılı
@@ -255,4 +259,6 @@ Web servisle işimiz bu kadar şimdi baglan.html dosyamızda gerekli birkaç de�
 </html>
 ```
 
+## Sonuç
 
+Php ile web servis oluşturup, Ajax fonksiyonu ile bağlantı kurarak verilerimizi aktarmayı başardık. Başka bir uygulamadan da baglan.php dosyamıza bağlanarak veri işlemlerimizi gerçekleştirebiliriz. Yani servisimizi bir sefer oluşturup tüm platformlar için kullanabiliriz.
