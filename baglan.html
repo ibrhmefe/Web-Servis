@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    
+</head>
+<script type="text/javascript" src="../egitimApp/www/js/jquery-3.2.1.min.js"></script>
+<body>
+    <input type="text" id="model"> <!-- İçerisine girilen değeri veri tabanımıza ekliyeceğiz.-->
+    <button id="ekle">Araba Modeli Ekle</button>
+    <button id="getir">Araba Modellerini Getir</button>
+    <div id="ekleme_alani"></div>
+</body>
+<script>
+    var url = "http://192.168.1.6/WebServis/baglan.php";
+    /* Web servisimizin bulunduğu urlyi oluşturduk. */
+    $(document).ready(function () {
+        /* Jquery kodlarını çalıştırmamız için gerekli kod. Sayfanın hazır olduğunu kontrol ediyoruz. */
+        $('#getir').click(function(){
+            /* getir idli butona tıkladığımızda ajax fonksiyonumuzu çalıştırıyoruz. */
+            $.ajax({
+                type: "post",
+                url: url,
+                dataType: "json",
+                data: {"islem": "araba_modelleri_getir"},
+                success: function (cevap) {
+                    if(cevap[0].sonuc == "0"){
+                        // Hata oluştu
+                        alert("Bir Hata Oluştu!");
+                    } else {
+                        /*  İşlem başarılı
+                            Gelen verileri for döngüsü ile alıp ekrana basıyoruz. */
+                        for (i = 0; i < cevap.length; i++) {
+                            $('#ekleme_alani').after(cevap[i].modelAd +"</br>");
+                        }
+                    }
+                }
+            });
+        });
+
+        $('#ekle').click(function(){
+            var model = $('#model').val();
+            /* model textimizin içerisindeki veriyi, model değişkenine atıyoruz. */
+            $.ajax({
+                type: "post",
+                url: url,
+                dataType: "json",
+                data: {"islem": "araba_modeli_ekle", "model": model},
+                success: function (cevap) {
+                    if(cevap[0].sonuc == "0"){
+                        // Hata oluştu
+                        alert("Bir Hata Oluştu!");
+                    } else {
+                        // İşlem başarılı
+                        alert( model + " değeri veri tabanına başarılı bir şekilde kaydedildi.")
+                    }
+                }
+            });
+        });
+    });
+</script>
+</html>
